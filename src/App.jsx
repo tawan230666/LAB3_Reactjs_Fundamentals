@@ -1,10 +1,10 @@
-// src/App.jsx
 import { useEffect } from 'react';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Header from './components/Header/Header';
 import About from './components/About/About';
 import Projects from './components/Projects/Projects';
 import Contact from './components/Contact/Contact';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';  // <-- import
 import './styles/global.css';
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -32,6 +32,7 @@ function App() {
           <Projects />
           <Contact />
         </main>
+        <ScrollToTop />  {/* <-- ใส่ตรงนี้ */}
       </div>
     </ThemeProvider>
   );
