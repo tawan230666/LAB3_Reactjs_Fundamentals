@@ -1,81 +1,54 @@
 import { Code, Palette, Zap, Heart } from 'lucide-react';
 import './About.css';
-import profileImage from '../../assets/images/profile.jpg';
+import image from "../../assets/images/profile.jpg"
 
 function About() {
   const skills = [
     { name: 'Frontend Development', icon: <Code size={24} />, color: '#3b82f6' },
     { name: 'UI/UX Design', icon: <Palette size={24} />, color: '#10b981' },
     { name: 'Performance Optimization', icon: <Zap size={24} />, color: '#f59e0b' },
-    { name: 'Problem Solving', icon: <Heart size={24} />, color: '#ef4444' }
+    { name: 'Problem Solving', icon: <Heart size={24} />, color: '#ef4444' },
   ];
 
   return (
     <section id="about" className="about section">
       <div className="container">
         <div className="about-content">
-
-          {/* Text Section */}
           <div className="about-text">
             <h2 className="section-title">About Me</h2>
             <p className="about-description">
-              Hello! I'm a passionate web developer with a love for creating 
-              beautiful and functional user experiences. I enjoy turning complex 
-              problems into simple, elegant solutions.
+              Hello! I'm a passionate web developer who loves building beautiful and functional experiences.
             </p>
             <p className="about-description">
-              When I'm not coding, you can find me exploring new technologies, 
-              reading tech blogs, or working on personal projects that challenge 
-              my creativity and technical skills.
+              When I'm not coding, I'm exploring new tech or crafting personal projects that push my skills.
             </p>
 
-            {/* Skills */}
             <div className="skills-grid">
-              {skills.map((skill, index) => (
-                <div key={index} className="skill-item">
-                  <div 
-                    className="skill-icon"
-                    style={{ backgroundColor: `${skill.color}20`, color: skill.color }}
-                  >
-                    {skill.icon}
+              {skills.map((s, i) => (
+                <div key={i} className="skill-item">
+                  <div className="skill-icon" style={{ backgroundColor: s.color + '20', color: s.color }}>
+                    {s.icon}
                   </div>
-                  <span className="skill-name">{skill.name}</span>
+                  <span className="skill-name">{s.name}</span>
                 </div>
               ))}
             </div>
 
-            {/* Actions */}
             <div className="about-actions">
-              <a href="/resume.pdf" className="btn-primary" download>
-                Download Resume
-              </a>
-              <button 
-                className="btn-secondary"
-                onClick={() => 
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-                }
-              >
-                Get In Touch
-              </button>
+              <a href="/resume.pdf" className="btn-primary" download>Download Resume</a>
+              <button className="btn-secondary" onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}>Get In Touch</button>
             </div>
           </div>
 
-          {/* Image Section */}
           <div className="about-image">
-            <div className="profile-image-container">
-              <img 
-                src={profileImage} 
-                alt="Profile" 
-                className="profile-image"
-                onError={(e) => { e.target.src = ''; }}
-              />
+            <div className="image-placeholder">
               <div className="placeholder-content">
+              <img src={image} style={{ marginTop: 50 , height: "315px" , marginLeft: 30}}/>
                 <p>Your Photo Here</p>
                 <small>Add your profile picture</small>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

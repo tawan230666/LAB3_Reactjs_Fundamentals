@@ -1,22 +1,23 @@
-// src/components/Contact/Contact.jsx - Template
-import './Contact.css';
+import { ExternalLink, Github } from 'lucide-react';
 
-function Contact() {
+function ProjectCard({ project }) {
+  const { title, description, image, technologies, demoUrl, githubUrl } = project;
   return (
-    <section id="contact" className="contact section">
-      <div className="container">
-        <h2 className="section-title">Get In Touch</h2>
-        <p className="section-subtitle">
-          Have a project in mind? Let's work together!
-        </p>
-        
-        {/* TODO: นักศึกษาเพิ่ม contact form ที่นี่ */}
-        <div className="contact-placeholder">
-          <p>Add contact form here</p>
+    <article className="project-card">
+      <div className="project-thumb">{image ? <img src={image} alt={title} /> : <div className="img-fallback">No Image</div>}</div>
+      <div className="project-body">
+        <h3>{title}</h3>
+        <p>{description}</p>
+        {technologies?.length ? (
+          <ul className="tech-list">{technologies.map((t, i) => <li key={i}>{t}</li>)}</ul>
+        ) : null}
+        <div className="project-actions">
+          {demoUrl && <a className="btn-primary" href={demoUrl} target="_blank" rel="noreferrer"><ExternalLink size={18}/> Live</a>}
+          {githubUrl && <a className="btn-secondary" href={githubUrl} target="_blank" rel="noreferrer"><Github size={18}/> Code</a>}
         </div>
       </div>
-    </section>
+    </article>
   );
 }
 
-export default Contact;
+export default ProjectCard;

@@ -1,56 +1,28 @@
-// src/components/Contact/Contact.jsx
-
 import { useState } from 'react';
-import { Github, Linkedin, Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
 import './Contact.css';
 
 function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [status, setStatus] = useState(null); // 'success' | 'error' | null
 
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
+  const validate = () => {
+    const e = {};
+    if (!formData.name.trim()) e.name = 'ชื่อจำเป็นต้องกรอก';
     if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
+      e.email = 'อีเมลจำเป็นต้องกรอก';
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      e.email = 'รูปแบบอีเมลไม่ถูกต้อง';
     }
     if (!formData.message.trim()) {
-      newErrors.message = 'Message is required';
+      e.message = 'ข้อความจำเป็นต้องกรอก';
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'Message must be at least 10 characters';
+      e.message = 'พิมพ์อย่างน้อย 10 ตัวอักษร';
     }
-    
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    
-    setIsSubmitting(true);
-    
-    try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setSubmitStatus(null), 5000);
-    } catch (error) {
-      setSubmitStatus('error');
-      setTimeout(() => setSubmitStatus(null), 5000);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setErrors(e);
+    return Object.keys(e).length === 0;
   };
 
   const handleChange = (e) => {
@@ -59,43 +31,64 @@ function Contact() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+    try {
+      // เดโม: จำลองการส่ง 1.5 วินาที (แทนที่ด้วยการเรียก API/บริการส่งอีเมลจริงได้)
+      await new Promise(res => setTimeout(res, 1500));
+
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setStatus(null), 5000);
+    } catch (err) {
+      setStatus('error');
+      setTimeout(() => setStatus(null), 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="contact section">
       <div className="container">
         <h2 className="section-title">Get In Touch</h2>
-        <p className="section-subtitle">
-          Have a project in mind? Let's work together!
-        </p>
-        
+        <p className="section-subtitle">Have a project in mind? Let's work together!</p>
+
         <div className="contact-content">
+          {/* Contact Form */}
           <div className="contact-form-wrapper">
-            <form className="contact-form" onSubmit={handleSubmit}>
+            <form className="contact-form" onSubmit={handleSubmit} noValidate>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input
-                  type="text"
                   id="name"
                   name="name"
+                  type="text"
                   value={formData.name}
                   onChange={handleChange}
                   className={errors.name ? 'error' : ''}
+                  placeholder="Your name"
                 />
                 {errors.name && <span className="error-message">{errors.name}</span>}
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="email">Email</label>
                 <input
-                  type="email"
                   id="email"
                   name="email"
+                  type="email"
                   value={formData.email}
                   onChange={handleChange}
                   className={errors.email ? 'error' : ''}
+                  placeholder="you@example.com"
                 />
                 {errors.email && <span className="error-message">{errors.email}</span>}
               </div>
-              
+
               <div className="form-group">
                 <label htmlFor="message">Message</label>
                 <textarea
@@ -105,68 +98,66 @@ function Contact() {
                   value={formData.message}
                   onChange={handleChange}
                   className={errors.message ? 'error' : ''}
-                ></textarea>
+                  placeholder="Tell me about your project..."
+                />
                 {errors.message && <span className="error-message">{errors.message}</span>}
               </div>
-              
-              <button 
-                type="submit" 
-                className="btn-primary" 
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="spinner"></span>
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send size={18} />
-                    Send Message
-                  </>
-                )}
+
+              <button type="submit" className="btn-primary" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : (<><Send size={18} /> Send Message</>)}
               </button>
-              
-              {submitStatus === 'success' && (
-                <p className="submit-success">Message sent successfully! Thank you.</p>
+
+              {status === 'success' && (
+                <div className="success-message">ส่งข้อความสำเร็จ! จะติดต่อกลับโดยเร็วที่สุด</div>
               )}
-              {submitStatus === 'error' && (
-                <p className="submit-error">Something went wrong. Please try again later.</p>
+              {status === 'error' && (
+                <div className="error-message">มีบางอย่างผิดพลาด ลองใหม่อีกครั้ง</div>
               )}
             </form>
           </div>
-          
+
+          {/* Contact Information / Socials */}
           <div className="contact-info">
-            <div className="contact-info-item">
-              <Mail size={24} />
+            <div className="contact-item">
+              <Mail size={22} />
               <div>
                 <h4>Email</h4>
                 <p>tawantippkun200501@gmail.com</p>
               </div>
             </div>
-            <div className="contact-info-item">
-              <Phone size={24} />
+
+            <div className="contact-item">
+              <Phone size={22} />
               <div>
                 <h4>Phone</h4>
-                <p>+1 (555) 123-4567</p>
+                <p>+66 XX XXX XXXX</p>
               </div>
             </div>
-            <div className="contact-info-item">
-              <MapPin size={24} />
+
+            <div className="contact-item">
+              <MapPin size={22} />
               <div>
                 <h4>Location</h4>
-                <p>Phrae, thailand</p>
+                <p>Phrae, Thailand</p>
               </div>
             </div>
-            
+
             <div className="social-links">
-              <a href="https://github.com/tawan230666" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <Github size={24} />
-              </a>
-              <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                <Linkedin size={24} />
-              </a>
+              <h4>Follow Me</h4>
+              <div className="social-icons">
+                <a href="https://github.com/tawan230666" target="_blank" rel="noreferrer noopener"><Github size={22} /></a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noreferrer noopener"><Linkedin size={22} /></a>
+                <a href="https://twitter.com/yourusername" target="_blank" rel="noreferrer noopener"><Twitter size={22} /></a>
+              </div>
             </div>
+
+            {/* ตัวเลือก: ปุ่ม mailto แบบเร็วๆ */}
+            <a
+              className="btn-secondary"
+              href={`mailto:tawantippkun200501@gmail.com?subject=Project%20Inquiry&body=Hi%2C%20I%27d%20like%20to%20discuss%20a%20project...`}
+            >
+              Quick Email
+            </a>
           </div>
         </div>
       </div>

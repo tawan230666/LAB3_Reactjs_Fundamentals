@@ -1,7 +1,5 @@
-/* src/styles/global.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-/* CSS Variables for Theming */
 :root[data-theme="light"] {
   --bg-primary: #ffffff;
   --bg-secondary: #f8fafc;
@@ -32,12 +30,7 @@
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.3);
 }
 
-/* Reset และ Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -47,65 +40,25 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App {
-  min-height: 100vh;
-}
+.App { min-height: 100vh; }
 
-/* Utility Classes */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-}
-
-.section {
-  padding: 5rem 0;
-}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 5rem 0; }
 
 .btn-primary {
-  background: var(--accent-primary);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
+  background: var(--accent-primary); color: #fff; border: none;
+  padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 500;
+  cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block;
 }
-
-.btn-primary:hover {
-  background: var(--accent-secondary);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
+.btn-primary:hover { background: var(--accent-secondary); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--accent-primary);
-  border: 2px solid var(--accent-primary);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  display: inline-block;
+  background: transparent; color: var(--accent-primary); border: 2px solid var(--accent-primary);
+  padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block;
 }
+.btn-secondary:hover { background: var(--accent-primary); color: white; }
 
-.btn-secondary:hover {
-  background: var(--accent-primary);
-  color: white;
-}
-
-/* Responsive */
 @media (max-width: 768px) {
-  .container {
-    padding: 0 1rem;
-  }
-  
-  .section {
-    padding: 3rem 0;
-  }
+  .container { padding: 0 1rem; }
+  .section { padding: 3rem 0; }
 }
