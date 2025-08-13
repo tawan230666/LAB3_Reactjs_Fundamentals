@@ -1,124 +1,284 @@
-/* --------------------
-   Reset & Base Styles
--------------------- */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* --------------------------------------------------
+   Global Styles for React Portfolio
+   - Light/Dark themes via [data-theme="dark"] on <html> or body
+   - Smooth sections, responsive grid, accessible focus states
+   -------------------------------------------------- */
+
+/* 1) CSS Variables */
+:root {
+  /* Colors - Light */
+  --bg: #0b0c10;                 /* base background (dim for modern look) */
+  --surface: #111318;            /* elevated surfaces */
+  --surface-2: #171a21;          
+  --text: #e6e6e6;               
+  --muted: #aab0bb;              
+  --primary: #6ea8fe;            /* primary accent */
+  --primary-contrast: #0a1633;   
+  --accent: #7ef0c1;             /* secondary accent */
+  --danger: #ff7369;
+
+  /* Layout */
+  --container: 1120px;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow: 0 6px 24px rgba(0,0,0,.35);
+  --shadow-sm: 0 4px 14px rgba(0,0,0,.25);
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans Thai", Arial, sans-serif;
+  --h1: clamp(2rem, 1.1rem + 3vw, 3.25rem);
+  --h2: clamp(1.5rem, 1rem + 2vw, 2.25rem);
+  --h3: 1.25rem;
+  --text-lg: 1.125rem;
+  --text: 1rem;
+  --text-sm: .95rem;
+
+  /* Spacing */
+  --space-1: .5rem;
+  --space-2: .875rem;
+  --space-3: 1.25rem;
+  --space-4: 2rem;
+  --space-5: 3rem;
+  --space-6: 5rem;
+
+  /* Misc */
+  --ring: 2px solid color-mix(in oklab, var(--primary), white 15%);
 }
 
-html {
-  scroll-behavior: smooth;
-  font-size: 16px;
+/* Optional: Light theme if your ThemeProvider toggles data-theme="light" */
+:root[data-theme="light"] {
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --surface-2: #f3f5f8;
+  --text: #121317;
+  --muted: #5b6270;
+  --primary: #2f6df6;
+  --primary-contrast: #e7efff;
+  --accent: #0fbf8c;
+  --shadow: 0 8px 30px rgba(0, 24, 64, .12);
+  --shadow-sm: 0 4px 16px rgba(0, 24, 64, .08);
 }
 
+/* 2) CSS Reset (modern minimal) */
+* { box-sizing: border-box; }
+*::before, *::after { box-sizing: inherit; }
+html, body, #root { height: 100%; }
+html { scroll-behavior: smooth; }
 body {
-  font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-  color: #111827;
-  background-color: #ffffff;
-  line-height: 1.6;
+  margin: 0;
+  background: radial-gradient(1200px 600px at 10% -10%, color-mix(in oklab, var(--primary), transparent 87%), transparent 70%),
+              radial-gradient(900px 500px at 120% 10%, color-mix(in oklab, var(--accent), transparent 88%), transparent 70%),
+              var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text);
+  line-height: 1.65;
 }
 
-/* --------------------
-   Layout Structure
--------------------- */
+/* 3) App Layout */
 .app-container {
-  display: flex;
-  flex-direction: column;
   min-height: 100vh;
 }
 
 .main-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  width: min(100%, var(--container));
+  margin-inline: auto;
+  padding: var(--space-5) var(--space-3);
 }
 
-/* --------------------
-   Sections
--------------------- */
+/* If your Header is fixed, the scroll-padding-top is handled in App.jsx.
+   You can also add a safe top-space here if needed: */
+body.has-fixed-header .main-content { padding-top: var(--space-6); }
+
+/* 4) Sections */
 .section {
-  padding: 80px 20px;
+  margin-block: var(--space-6);
 }
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: .75rem;
+  margin-bottom: var(--space-4);
 }
-
-/* --------------------
-   Typography
--------------------- */
-h1, h2, h3, h4, h5, h6 {
+.section-title {
+  font-size: var(--h2);
   font-weight: 700;
-  color: #1f2937;
+  letter-spacing: 2px;
+}
+.section-subtitle {
+  color: var(--muted);
+  font-size: var(--text-lg);
 }
 
-p {
-  margin-bottom: 1rem;
-  color: #4b5563;
+/* 5) Surface / Card */
+.card {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface), #fff 2%), var(--surface));
+  border: 1px solid color-mix(in oklab, var(--surface), white 8%);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.card:hover { box-shadow: var(--shadow); }
+
+/* 6) About */
+.about {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+.about .bio { 
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.about .skills {
+  display: flex; flex-wrap: wrap; gap: .5rem .75rem;
+}
+.badge {
+  padding: .35rem .6rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--primary), transparent 85%);
+  border: 1px solid color-mix(in oklab, var(--primary), white 20%);
+  font-size: .9rem;
 }
 
-/* --------------------
-   Buttons
--------------------- */
-.btn-primary {
-  background-color: #3b82f6;
+/* 7) Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+.project-card { 
+  display: grid;
+  grid-template-rows: auto 1fr auto; 
+  gap: var(--space-2);
+  padding: var(--space-3);
+}
+.project-card .thumb {
+  aspect-ratio: 16/9;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.project-card h3 { font-size: var(--h3); margin: .25rem 0; }
+.project-card p { color: var(--muted); }
+
+.project-meta { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.tag { 
+  font-size: .85rem; 
+  padding: .25rem .55rem; 
+  border-radius: 999px; 
+  background: color-mix(in oklab, var(--accent), transparent 86%);
+  border: 1px solid color-mix(in oklab, var(--accent), white 18%);
+}
+
+/* 8) Buttons & Links */
+.button, .btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .5rem;
+  padding: .65rem 1rem;
+  border-radius: calc(var(--radius-sm) - 2px);
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--primary), white 6%), var(--primary));
   color: white;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 500;
   text-decoration: none;
-  display: inline-block;
-  transition: background-color 0.2s ease;
+  font-weight: 600;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  box-shadow: 0 6px 16px color-mix(in oklab, var(--primary), black 70% / 22%);
+}
+.button:hover { transform: translateY(-1px); filter: brightness(1.02); }
+.button:active { transform: translateY(0); filter: brightness(.98); }
+.button.ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: color-mix(in oklab, var(--text), transparent 80%);
+  box-shadow: none;
 }
 
-.btn-primary:hover {
-  background-color: #2563eb;
+/* 9) Contact */
+.contact {
+  display: grid; gap: var(--space-3);
 }
-
-.btn-secondary {
-  background-color: #e5e7eb;
-  color: #374151;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+.contact .card { padding: var(--space-4); }
+.form {
+  display: grid; gap: 1rem;
 }
-
-.btn-secondary:hover {
-  background-color: #d1d5db;
+.input, .textarea {
+  width: 100%;
+  padding: .8rem .95rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in oklab, var(--text), transparent 85%);
+  background: var(--surface-2);
+  color: var(--text);
 }
+.textarea { min-height: 140px; resize: vertical; }
 
-/* --------------------
-   Scroll To Top Button
--------------------- */
+/* 10) Scroll To Top */
 .scroll-to-top {
-  position: fixed;
-  right: 20px;
-  bottom: 25px;
-  background-color: #3b82f6;
-  color: white;
-  padding: 10px;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  position: fixed; right: 24px; bottom: 24px;
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid color-mix(in oklab, var(--surface), white 8%);
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  z-index: 999;
+  opacity: .96; transform: translateY(6px);
+  transition: opacity .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.scroll-to-top:hover { opacity: 1; transform: translateY(0); box-shadow: 0 10px 32px rgba(0,0,0,.35); }
+.scroll-to-top svg { width: 22px; height: 22px; }
+
+/* 11) Utilities */
+.container { width: min(100%, var(--container)); margin-inline: auto; padding-inline: var(--space-3); }
+.muted { color: var(--muted); }
+.center { text-align: center; }
+.grid-2 { display: grid; grid-template-columns: 1fr; gap: var(--space-3); }
+.grid-3 { display: grid; grid-template-columns: 1fr; gap: var(--space-3); }
+
+/* 12) Focus ring (accessibility) */
+:where(a, button, input, textarea, select, .button, .btn):focus-visible {
+  outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--primary), transparent 70%), 0 0 0 6px color-mix(in oklab, var(--primary), white 75%);
 }
 
-.scroll-to-top:hover {
-  background-color: #2563eb;
-  transform: translateY(-3px);
+/* 13) Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
 }
 
-/* --------------------
-   Responsive
--------------------- */
-@media (max-width: 768px) {
-  .section {
-    padding: 60px 15px;
-  }
+/* 14) Responsive Breakpoints */
+@media (min-width: 640px) { /* sm */
+  .about { grid-template-columns: 1.2fr .8fr; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
 }
+@media (min-width: 880px) { /* md */
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1160px) { /* lg */
+  .projects-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 15) Optional: subtle section dividers */
+.section + .section::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin: var(--space-6) 0;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--text), transparent 85%), transparent);
+}
+
+/* 16) Typography helpers */
+.lead { font-size: var(--text-lg); color: var(--muted); }
+kbd { background: var(--surface-2); padding: .15rem .35rem; border-radius: 6px; border: 1px solid color-mix(in oklab, var(--text), transparent 82%); }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; background: var(--surface-2); padding: .15rem .35rem; border-radius: 6px; }
+
+/* 17) Link styles */
+a { color: var(--primary); text-underline-offset: 2px; }
+a:hover { text-decoration: underline; }
+
+/* 18) Tables (if needed) */
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: .75rem 1rem; border-bottom: 1px solid color-mix(in oklab, var(--text), transparent 88%); }
+.table th { text-align: left; color: var(--muted); }
