@@ -109,34 +109,3 @@ body {
     padding: 3rem 0;
   }
 }
-
-.btn-primary {
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-  transition: all 0.3s ease;
-}
-
-.btn-primary:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow);
-  transition: all 0.1s ease;
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 0 1rem;
-  }
-
-  .section {
-    padding: 2rem 0;
-  }
-
-  .btn-primary, .btn-secondary {
-    width: 100%;
-    text-align: center;
-  }
-}

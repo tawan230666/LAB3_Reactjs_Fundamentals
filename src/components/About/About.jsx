@@ -1,7 +1,6 @@
-// src/components/About/About.jsx
 import { Code, Palette, Zap, Heart } from 'lucide-react';
 import './About.css';
-import profileImage from '../../assets/images/profile.jpg'
+import profileImage from '../../assets/images/profile.jpg';
 
 function About() {
   const skills = [
@@ -15,6 +14,8 @@ function About() {
     <section id="about" className="about section">
       <div className="container">
         <div className="about-content">
+
+          {/* Text Section */}
           <div className="about-text">
             <h2 className="section-title">About Me</h2>
             <p className="about-description">
@@ -27,13 +28,14 @@ function About() {
               reading tech blogs, or working on personal projects that challenge 
               my creativity and technical skills.
             </p>
-            
+
+            {/* Skills */}
             <div className="skills-grid">
               {skills.map((skill, index) => (
                 <div key={index} className="skill-item">
                   <div 
                     className="skill-icon"
-                    style={{ backgroundColor: skill.color + '20', color: skill.color }}
+                    style={{ backgroundColor: `${skill.color}20`, color: skill.color }}
                   >
                     {skill.icon}
                   </div>
@@ -42,28 +44,38 @@ function About() {
               ))}
             </div>
 
+            {/* Actions */}
             <div className="about-actions">
               <a href="/resume.pdf" className="btn-primary" download>
                 Download Resume
               </a>
               <button 
                 className="btn-secondary"
-                onClick={() => document.getElementById('contact').scrollIntoView({ behavior: 'smooth' })}
+                onClick={() => 
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+                }
               >
                 Get In Touch
               </button>
             </div>
           </div>
 
+          {/* Image Section */}
           <div className="about-image">
-            <div className="image-placeholder">
-                <img src={profileImage} alt="" className='imageporfile'/>
+            <div className="profile-image-container">
+              <img 
+                src={profileImage} 
+                alt="Profile" 
+                className="profile-image"
+                onError={(e) => { e.target.src = ''; }}
+              />
               <div className="placeholder-content">
                 <p>Your Photo Here</p>
                 <small>Add your profile picture</small>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </section>

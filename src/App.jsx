@@ -4,7 +4,7 @@ import Header from './components/Header/Header';
 import About from './components/About/About';
 import Projects from './components/Projects/Projects';
 import Contact from './components/Contact/Contact';
-import ScrollToTop from './components/ScrollToTop/ScrollToTop';  // <-- import
+import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import './styles/global.css';
 
 function App() {
@@ -25,14 +25,23 @@ function App() {
 
   return (
     <ThemeProvider>
-      <div className="App">
+      <div 
+        className="app-container"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh'
+        }}
+      >
         <Header />
-        <main>
+
+        <main className="main-content">
           <About />
           <Projects />
           <Contact />
         </main>
-        <ScrollToTop />  {/* <-- ใส่ตรงนี้ */}
+
+        <ScrollToTop />
       </div>
     </ThemeProvider>
   );
