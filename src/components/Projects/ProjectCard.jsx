@@ -4,7 +4,7 @@ function ProjectCard({ project }) {
   const { title, description, image, technologies, demoUrl, githubUrl } = project;
   return (
     <article className="project-card">
-      <div className="project-thumb">{image ? <img src={image} alt={title} /> : <div className="img-fallback">No Image</div>}</div>
+      <div className="project-thumb">{image ? <img src={image} alt={title} loading="lazy" /> : <div className="img-fallback">{title}</div>}</div>
       <div className="project-body">
         <h3>{title}</h3>
         <p>{description}</p>

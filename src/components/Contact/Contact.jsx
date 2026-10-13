@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
+import { Mail, MapPin, Send, Github } from 'lucide-react';
 import './Contact.css';
+
+const CONTACT_EMAIL = 'tawantippkun200501@gmail.com';
 
 function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -37,8 +39,11 @@ function Contact() {
 
     setIsSubmitting(true);
     try {
-      // เดโม: จำลองการส่ง 1.5 วินาที (แทนที่ด้วยการเรียก API/บริการส่งอีเมลจริงได้)
-      await new Promise(res => setTimeout(res, 1500));
+      // No backend: open the visitor's email app with the message pre-filled,
+      // so messages actually reach me instead of being silently discarded.
+      const subject = encodeURIComponent(`Portfolio contact from ${formData.name}`);
+      const body = encodeURIComponent(`${formData.message}\n\n— ${formData.name} (${formData.email})`);
+      window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
 
       setStatus('success');
       setFormData({ name: '', email: '', message: '' });
@@ -108,7 +113,7 @@ function Contact() {
               </button>
 
               {status === 'success' && (
-                <div className="success-message">ส่งข้อความสำเร็จ! จะติดต่อกลับโดยเร็วที่สุด</div>
+                <div className="success-message">Your email app has opened with the message, just press Send. You can also email me directly.</div>
               )}
               {status === 'error' && (
                 <div className="error-message">มีบางอย่างผิดพลาด ลองใหม่อีกครั้ง</div>
@@ -122,15 +127,7 @@ function Contact() {
               <Mail size={22} />
               <div>
                 <h4>Email</h4>
-                <p>tawantippkun200501@gmail.com</p>
-              </div>
-            </div>
-
-            <div className="contact-item">
-              <Phone size={22} />
-              <div>
-                <h4>Phone</h4>
-                <p>+66 XX XXX XXXX</p>
+                <p><a href="mailto:tawantippkun200501@gmail.com">tawantippkun200501@gmail.com</a></p>
               </div>
             </div>
 
@@ -146,8 +143,6 @@ function Contact() {
               <h4>Follow Me</h4>
               <div className="social-icons">
                 <a href="https://github.com/tawan230666" target="_blank" rel="noreferrer noopener"><Github size={22} /></a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noreferrer noopener"><Linkedin size={22} /></a>
-                <a href="https://twitter.com/yourusername" target="_blank" rel="noreferrer noopener"><Twitter size={22} /></a>
               </div>
             </div>
 

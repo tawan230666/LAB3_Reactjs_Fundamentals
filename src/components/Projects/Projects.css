@@ -5,7 +5,7 @@
 
 .project-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 0.75rem; overflow: hidden; box-shadow: var(--shadow); display: flex; flex-direction: column; }
 .project-thumb img { width: 100%; height: 180px; object-fit: cover; display: block; }
-.img-fallback { height: 180px; display: grid; place-items: center; color: var(--text-tertiary); background: var(--bg-tertiary); }
+.img-fallback { height: 180px; display: grid; place-items: center; padding: 1rem; text-align: center; font-weight: 700; font-size: 1.15rem; color: #fff; background: linear-gradient(135deg, #2563eb, #7c3aed); }
 .project-body { padding: 1rem; }
 .project-body h3 { margin-bottom: 0.5rem; }
 .project-body p { color: var(--text-secondary); margin-bottom: 0.75rem; }
@@ -15,3 +15,5 @@
 
 @media (max-width: 992px) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .projects-grid { grid-template-columns: 1fr; } }
+.projects-more { text-align: center; margin-top: 2rem; color: var(--text-secondary); }
+.projects-more a { color: inherit; font-weight: 600; }
